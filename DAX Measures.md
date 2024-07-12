@@ -244,18 +244,7 @@
             HASONEVALUE(
               'Customer Lookup'[CustomerKey]),
               [Total Revenue],
-              "-")
-
-#### 10-Day Rolling Revenue
-
-        = CALCULATE(
-            [Total Revenue],
-            DATESINPERIOD(
-              'Calendar Lookup'[Date],
-              MAX(
-                'Calendar Lookup'[Date]),
-              -10,
-              DAY))        
+              "-")  
 
 #### Full Name (Customer Detail) 
 
@@ -281,4 +270,29 @@
             DATEADD(
               'Calendar Lookup'[Date],
               -1,
-              MONTH))             
+              MONTH))        
+
+#### Total Revenue
+
+        = SUMX(
+            'Sales Data',
+            'Sales Data'[OrderQuantity] * 
+            RELATED(
+              'Product Lookup'[ProductPrice]))
+
+#### YTD Revenue
+
+        = CALCULATE(
+            [Total Revenue],
+            DATESYTD('Calendar Lookup'[Date]))
+
+#### 10-Day Rolling Revenue
+
+        = CALCULATE(
+            [Total Revenue],
+            DATESINPERIOD(
+              'Calendar Lookup'[Date],
+              MAX(
+                'Calendar Lookup'[Date]),
+              -10,
+              DAY))         
