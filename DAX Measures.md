@@ -229,3 +229,56 @@
             [Quantity Returned],
             [Quantity Sold], 
             "No Sales")
+
+#### Total Cost
+
+        = SUMX(
+            'Sales Data',
+            'Sales Data'[OrderQuantity] * 
+            RELATED(
+              'Product Lookup'[ProductCost]))
+
+#### Total Revenue (Customer Detail)
+
+        = IF(
+            HASONEVALUE(
+              'Customer Lookup'[CustomerKey]),
+              [Total Revenue],
+              "-")
+
+#### 10-Day Rolling Revenue
+
+        = CALCULATE(
+            [Total Revenue],
+            DATESINPERIOD(
+              'Calendar Lookup'[Date],
+              MAX(
+                'Calendar Lookup'[Date]),
+              -10,
+              DAY))        
+
+#### Full Name (Customer Detail) 
+
+        = IF(
+            HASONEVALUE(
+              'Customer Lookup'[CustomerKey]),
+            MAX(
+              'Customer Lookup'[Full Name]),
+            "Multiple Customers")
+
+#### High Ticket Orders
+
+        = CALCULATE(
+            [Sales Transactions],
+            FILTER(
+              'Product Lookup',
+              'Product Lookup'[ProductPrice] > [Overall Average Price]))
+
+ #### Previous Month Orders 
+
+        = CALCULATE(
+            [Sales Transactions],
+            DATEADD(
+              'Calendar Lookup'[Date],
+              -1,
+              MONTH))             
