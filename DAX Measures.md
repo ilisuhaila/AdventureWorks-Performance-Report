@@ -1,4 +1,4 @@
-# [DAX] AdventureWorks Performance Report 
+# [DAX] Performance Tracking Report for Manufacturing Company
 
 
 #### Sales Transactions 
